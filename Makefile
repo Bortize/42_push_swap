@@ -6,7 +6,7 @@
 #    By: bgomez-r <bgomez-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/24 04:03:18 by bgomez-r          #+#    #+#              #
-#    Updated: 2021/03/24 04:27:43 by bgomez-r         ###   ########.fr        #
+#    Updated: 2021/03/24 20:59:41 by bgomez-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,41 +17,40 @@
 #.SILENT:
 #########################	Program Name	###################################
 # Variable to indicate the name of our program
-NAME		=	checker
+NAME_CK		=	checker
 
-NAME_2	=	push_swap
+#NAME_PS	=	push_swap
 
 #########################	Function Files	#################################
-SRCS		=
+SRCS		=	print_error.c \
+					checher.c \
 
 
 
 ############################################################################
-CC				= gcc
+CC						= gcc
 
-INCLUDES	= -Iheaders -I$(FTPRINTF_PATH)
+INCLUDES			= -Iincludes
 
-CFLAGS		= -Wall -Wextra -Werror -w -O3 $(INCLUDES)
+CFLAGS				= -Wall -Wextra -Werror -w -O3 $(INCLUDES)
 
-LIB_COMMON		= -lm -L$(FTPRINTF_PATH) -l$(FTPRINTF_NAME)
+LIB_COMMON		= -lm -L$(LIBFT_PATH) -l$(LIBFT_NAME)
 
-OBJS			= $(SRCS:.c=.o)
+OBJS					= $(SRCS:.c=.o)
 
-LFTDIR		=	./42_libft
+LIBFT_PATH	= ./42_libft/libft
+LIBFT_NAME	= libft
+LIBFT_FILE	= $(LIBFT_PATH)/lib$(LIBFT_NAME).a
 
-FTPRINTF_PATH	= printf
-FTPRINTF_NAME	= ftprintf
-FTPRINTF_FILE	= $(FTPRINTF_PATH)/lib$(FTPRINTF_NAME).a
-
-RM				= rm -rf
+RM						= rm -rf
 
 ##########################	Rules	########################################
 
-all: #$(NAME_2) $(NAME)
+all: 	$(NAME_CK)	#$(NAME_PS)
 
-$(NAME):
-
-$(NAME_2):
+$(NAME_CK): $(OBJS) $(LIBFT_FILE)
+							$(CC) $(OBJS) -o checker $(CFLAGS) $(LIB_COMMON)
+#$(NAME_PS):
 
 
 ##########################################################################
@@ -73,8 +72,6 @@ re:			fclean all
 debug:	CFLAGS += -O3 -g3 #-fsanitize=address #system("leaks -fullContent cub3D");
 debug:	$(NAME)
 
-run:	$(NAME)
-			./nameProgma ARGS
 
 ##########################	Rules Phony	 ##################################
 
